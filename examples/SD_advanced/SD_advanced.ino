@@ -57,6 +57,14 @@ void setup() {
   // Check if the directory exists after deletion
   if(!fileExists("/testDir/")) Serial.println("testDir doesn't exist");
 
+  // We can also read the mechanical switch from the SD-card connector, indicating if a card is present or not
+  bool cardPresent = SDCardPresent();
+  if(cardPresent)
+  {
+    Serial.println("SD card is connected");
+  }else{
+    Serial.println("SD card is not connected");
+  }
 }
 
 

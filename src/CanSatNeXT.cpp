@@ -2,7 +2,7 @@
 #include "Wire.h"
 
 
-uint8_t CanSatInit() {
+uint8_t CanSatInit(uint8_t *macAddress) {
   Wire.begin(I2C_SDA, I2C_SCL);
 
   Serial.println("Init CanSatNeXT!");
@@ -29,8 +29,28 @@ uint8_t CanSatInit() {
     errors = ERROR_MEMORY;
   }
 
+  // As a safety feature, initialize radio if macAddress is provided
+  if(macAddress != nullptr)
+  {
+    if(initializeESPNOW(macAddress))
+    {
+      Serial.println("Failed to initialize the radio system");
+      errors = ERROR_RADIO;
+    }
+  }
+
   return errors;
 
+}
+
+uint8_t GroundStationInit(uint8_t *macAddress) {
+  if(initializeESPNOW(macAddress))
+  {
+    Serial.println("Failed to initialize the radio system");
+    return ERROR_RADIO;
+  }
+
+  return 0;
 }
 
 
