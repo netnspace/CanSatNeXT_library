@@ -6,6 +6,7 @@
 #include "Storage/memory.h"
 #include "CanSatNeXTPins.h"
 #include "Communication/radio.h"
+#include "Analog/analog.h"
 
 #define NO_ERROR 0
 #define ERROR_IMU 1

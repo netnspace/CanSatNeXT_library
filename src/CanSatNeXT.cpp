@@ -1,13 +1,20 @@
 #include "CanSatNeXT.h"
 #include "Wire.h"
+#include "soc/soc.h"
+#include "soc/rtc_cntl_reg.h"
 
 
 uint8_t CanSatInit(uint8_t *macAddress) {
+  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //This disables input voltage checks - enabling the satellite to use batteries until they are empty
+
   Wire.begin(I2C_SDA, I2C_SCL);
 
   Serial.println("Init CanSatNeXT!");
   pinMode(LED, OUTPUT);
+  pinMode(MEAS_EN, OUTPUT);
+  pinMode(SD_DET, INPUT);
   digitalWrite(LED, HIGH);
+  digitalWrite(MEAS_EN, HIGH);
   uint8_t errors = 0;
   if(initIMU())
   {
