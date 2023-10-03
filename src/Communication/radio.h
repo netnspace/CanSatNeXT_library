@@ -1,3 +1,6 @@
+// Copyright (c) 2023 Samuli Nyman
+// SPDX-License-Identifier: MIT
+
 #ifndef __RADIO_H
 #define __RADIO_H
 

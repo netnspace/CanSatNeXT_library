@@ -1,3 +1,6 @@
+// Copyright (c) 2023 Samuli Nyman
+// SPDX-License-Identifier: MIT
+
 #include "CanSatNeXT.h"
 #include "Wire.h"
 #include "soc/soc.h"

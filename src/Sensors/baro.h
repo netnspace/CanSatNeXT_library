@@ -1,3 +1,6 @@
+// Copyright (c) 2023 Samuli Nyman
+// SPDX-License-Identifier: MIT
+
 #ifndef __BARO_H
 #define __BARO_H
 

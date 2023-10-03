@@ -1,5 +1,7 @@
-#include "radio.h"
+// Copyright (c) 2023 Samuli Nyman
+// SPDX-License-Identifier: MIT
 
+#include "radio.h"
 #include <esp_now.h>
 #include "esp_wifi.h"
 #include <WiFi.h>
