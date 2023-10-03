@@ -1,0 +1,26 @@
+# Ignore the .vscode directory
+.vscode/
+
+# Ignore other typical files/directories for a library project
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.lib
+*.exe
+*.out
+*.app
+*.iobj
+*.ipdb
+*.ilk
+*.pdb
+*.idb
+*.suo
+*.exp
+*.sublime-*
+build/
+Debug/
+Release/
+.vs/
+.idea/
