@@ -1,4 +1,4 @@
-# CanSatNeXT_library
+# CanSatNeXT library
 
 CanSat NeXT is an ESP32 development board developed for CanSat competitions in collaboration with ESERO Finland. This library provides easy access to the hardware resources of the development board. The hardware resources include a barometer, an inertial measurement unit, an SD card and a point-to-point communication radio. The library supports both the satellite and the receiver. The receiver can be similar to the CanSat NeXT board but also any other ESP32 development board.
 
