@@ -17,7 +17,7 @@ This is an Arduino library, designed to be primarily used through the Arduino ID
 3. Install the CanSatNeXT Library:
    - In the Arduino IDE, go to Sketch -> Include Library -> Manage Libraries.
    - In the search bar, type "CanSatNeXT" and find the corresponding library.
-   - Click on the "Install" button to install the library.
+   - Click on the "Install" button to install the library. If the Arduino IDE asks if you want to install with dependencies - click yes.
    - Alternatively, you can manually add the library by downloading this repository and saving it into the Arduino libraries folder on your computer.
 
 4. Connect the CanSatNeXT Board:
