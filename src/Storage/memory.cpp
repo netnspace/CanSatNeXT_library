@@ -80,7 +80,7 @@ void deleteDir(String path)
     SD.rmdir(path);
 }
 
-uint8_t fileExists(String path)
+bool fileExists(String path)
 {
     return SD.exists(path);
 }
@@ -94,11 +94,16 @@ uint32_t fileSize(String path)
     return length;
 }
 
-void writeFile(String path, String data)
+uint8_t writeFile(String path, String data)
 {
-    File f = SD.open(path, FILE_WRITE);
-    f.print(data);
-    f.close();
+    File file = SD.open(path, FILE_WRITE);
+    if(!file){
+        return 1;
+    }
+    uint8_t error = file.print(data);
+    file.close();
+    if(error) return 1;
+    return 0;
 }
 
 String readFile(String path)

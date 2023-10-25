@@ -21,4 +21,5 @@ void loop() {
   delay(100);
   digitalWrite(LED, LOW);
   delay(400);
+  Serial.println("This is a message!");
 }
