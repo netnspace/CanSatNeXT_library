@@ -21,12 +21,14 @@ This is an Arduino library, designed to be primarily used through the Arduino ID
    - Alternatively, you can manually add the library by downloading this repository and saving it into the Arduino libraries folder on your computer.
 
 4. Connect the CanSatNeXT Board:
+   - Select the board type in the Arduino IDE from Tools -> Board -> esp32 and select ESP32 Dev Module
    - Plug the CanSatNeXT board into your PC using a USB cable.
    - Your PC should automatically detect the board, but if it doesn't, you may need to install the necessary drivers.
    - Drivers can be found on the Silicon Labs website: [https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
+   - The driver can be downloaded on the Silicon Labs website from Downloads -> CP210x VCP Windows (Mac and Linux don't need a specific driver with this chip)
    - For additional help with setting up the ESP32, refer to the following tutorial: [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/establish-serial-connection.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/establish-serial-connection.html)
 
-5. Get Started with the CanSatNeXT Board:
+6. Get Started with the CanSatNeXT Board:
    - Once you have installed the Arduino IDE, ESP32 support, and the CanSatNeXT library (and possibly the drivers), you are ready to start using the board.
    - To explore the use of the various hardware resources, go to File -> Examples -> CanSatNeXT in the Arduino IDE.
 
