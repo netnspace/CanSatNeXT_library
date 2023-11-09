@@ -30,4 +30,7 @@ void loop() {
   snprintf(report, sizeof(report), "A: %4.2f %4.2f %4.2f    G: %4.2f %4.2f %4.2f",
       ax, ay, az, gx, gy, gz);
   Serial.println(report);
+  
+  // Wait 200 milliseconds before doing it again
+  delay(200);
 }

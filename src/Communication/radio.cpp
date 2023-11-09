@@ -93,9 +93,7 @@ void internalDataReceivedCallback(const uint8_t * mac, const uint8_t *incomingDa
 }
 
 __attribute__((weak)) void onDataReceived(String data) {
-    Serial.print("Received a message: ");
-    Serial.print(data);
-    Serial.println("");
+    
 }
 
 __attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, int len){
