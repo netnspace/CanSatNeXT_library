@@ -15,11 +15,25 @@ void internalDataSentCallback(const uint8_t *mac_addr, esp_now_send_status_t sta
 
 bool radioHasBeenInitialized = false;
 
+
+void printAddress(uint8_t mac[6])
+{
+  for (int n = 0; n < 6; n++)
+  {
+    Serial.print(((uint8_t) mac[n]) < 16 ? "0" : "");
+    Serial.print(mac[n], HEX);
+    Serial.print(n < 5 ? ":" : "");
+  }
+  Serial.println();
+}
+
 uint8_t initializeESPNOW(uint8_t *macAddress)
 {
+    memcpy(broadcastAddress, macAddress, 6);
+
     WiFi.mode(WIFI_STA);
     // set receive address
-    if(esp_wifi_set_mac(WIFI_IF_STA, &macAddress[0]))
+    if(esp_wifi_set_mac(WIFI_IF_STA, broadcastAddress))
     {
         Serial.println("Invalid MAC address!");
         return 1;
@@ -35,19 +49,29 @@ uint8_t initializeESPNOW(uint8_t *macAddress)
     esp_now_register_recv_cb(internalDataReceivedCallback);
 
     // Register peer
-    memcpy(peerInfo.peer_addr, macAddress, 6);
+    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;  
     peerInfo.encrypt = false;
-
+    
     if (esp_now_add_peer(&peerInfo) != ESP_OK){
         Serial.println("Failed to add peer");
         return 1;
     }
 
-    memcpy(broadcastAddress, macAddress, 6);
 
     radioHasBeenInitialized = true;
+
     return 0;
+}
+
+void createMacAddress(uint8_t lastByte, uint8_t mac[6]) 
+{
+    mac[0] = 0x02;
+    mac[1] = 0x2A;
+    mac[2] = 0x56;
+    mac[3] = 0x72;
+    mac[4] = 0x2B;
+    mac[5] = lastByte;
 }
 
 uint8_t sendData(String data)

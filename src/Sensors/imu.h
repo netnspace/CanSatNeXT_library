@@ -10,4 +10,11 @@ uint8_t readAcceleration(float &x, float &y, float &z);
 uint8_t readGyro(float &x, float &y, float &z);
 uint8_t initIMU();
 
+float readAccelX();
+float readAccelY();
+float readAccelZ();
+float readGyroX();
+float readGyroY();
+float readGyroZ();
+
 #endif

@@ -7,6 +7,8 @@
 #include "Arduino.h"
 
 uint8_t initializeESPNOW(uint8_t *macAddress);
+void createMacAddress(uint8_t lastByte, uint8_t mac[6]);
+
 __attribute__((weak)) void onDataReceived(String data);
 __attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, int len);
 __attribute__((weak)) void onDataSent(const bool success);

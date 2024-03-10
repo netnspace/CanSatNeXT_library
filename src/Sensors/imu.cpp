@@ -33,3 +33,33 @@ uint8_t readGyro(float &x, float &y, float &z){
   z = imu.g.z * 8.75 * 0.001;
   return 0;
 }
+
+float readAccelX() {
+  imu.read();
+  return imu.a.x * 0.061 * 0.001;
+}
+
+float readAccelY() {
+  imu.read();
+  return imu.a.y * 0.061 * 0.001;
+}
+
+float readAccelZ() {
+  imu.read();
+  return imu.a.z * 0.061 * 0.001;
+}
+
+float readGyroX() {
+  imu.read();
+  return imu.g.x * 8.75 * 0.001;
+}
+
+float readGyroY() {
+  imu.read();
+  return imu.g.y * 8.75 * 0.001;
+}
+
+float readGyroZ() {
+  imu.read();
+  return imu.g.z * 8.75 * 0.001;
+}

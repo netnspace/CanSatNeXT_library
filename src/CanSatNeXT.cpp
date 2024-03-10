@@ -7,6 +7,13 @@
 #include "soc/rtc_cntl_reg.h"
 
 
+
+uint8_t CanSatInit(uint8_t maccAddressLastByte){
+  uint8_t address[6];
+  createMacAddress(maccAddressLastByte, address);
+  return CanSatInit(address);
+}
+
 uint8_t CanSatInit(uint8_t *macAddress) {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //This disables input voltage checks - enabling the satellite to use batteries until they are empty
 
@@ -39,7 +46,7 @@ uint8_t CanSatInit(uint8_t *macAddress) {
     errors = ERROR_MEMORY;
   }
 
-  // As a safety feature, initialize radio if macAddress is provided
+  // As a safety feature, initialize radio only if macAddress is provided
   if(macAddress != nullptr)
   {
     if(initializeESPNOW(macAddress))
@@ -51,6 +58,12 @@ uint8_t CanSatInit(uint8_t *macAddress) {
 
   return errors;
 
+}
+
+uint8_t GroundStationInit(uint8_t maccAddressLastByte){
+  uint8_t address[6];
+  createMacAddress(maccAddressLastByte, address);
+  return GroundStationInit(address);
 }
 
 uint8_t GroundStationInit(uint8_t *macAddress) {

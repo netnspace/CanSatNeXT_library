@@ -6,16 +6,13 @@
 
 #include "CanSatNeXT.h"
 
-// This is the address of the groundstation we will send data to.
-uint8_t groundsationMAC[] = {0xA8, 0x42, 0xE3, 0xDA, 0x86, 0x48};
-
 void setup() {
 
   // Initialize serial with baud rate 115200
   Serial.begin(115200);
 
-  // Initialize CanSatNeXT systems. Calling this function with the MAC address as a parameter enables the radio.
-  CanSatInit(groundsationMAC);
+  // Initialize CanSatNeXT systems. Calling this function with an address as a parameter enables the radio. The address is shared by both the transmitter and receiver. 
+  CanSatInit(72);
 }
 
 void loop() {

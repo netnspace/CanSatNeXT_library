@@ -19,6 +19,9 @@
 #define ERROR_NO_SD_CARD 5
 
 uint8_t CanSatInit(uint8_t *macAddress = nullptr);
+uint8_t CanSatInit(uint8_t maccAddressLastByte);
+
 uint8_t GroundStationInit(uint8_t *macAddress);
+uint8_t GroundStationInit(uint8_t maccAddressLastByte);
 
 #endif

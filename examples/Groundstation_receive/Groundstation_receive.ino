@@ -13,20 +13,13 @@
 // Include CanSatNeXT library
 #include "CanSatNeXT.h"
 
-// This is the address for our groundstation. You can choose this yourself, 
-// as long as the setting in satellite and GS match. The address can be ALMOST
-// any 6 byte combination. For example 00:00:00:00:00:00 is not valid address.
-// The library will tell you if the address you chose is not valid - you can just
-// pick another one.
-uint8_t groundsationMAC[] = {0xA8, 0x42, 0xE3, 0xDA, 0x86, 0x48};
-
 void setup() {
 
   // Start serial so that we can print the data. Baud rate here is 115200 symbols/second.
   Serial.begin(115200);
 
   // Initialize this device as a ground station
-  GroundStationInit(groundsationMAC);
+  GroundStationInit(72);
 }
 
 void loop() {
