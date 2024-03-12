@@ -66,7 +66,7 @@ Here is the full list of pins used by CanSat NeXT board. The internal use refers
 
 The picture below shows the pins for using the extension header for adding external electronics to the board.
 
-![image description](https://lh3.googleusercontent.com/drive-viewer/AK7aPaCUB9VRAFwGYMO-EW117XElR3Waykcdr3ZVzOU-5kBlBRU1rIueelkvuGBM6O7GWhvSDbSqAIs4xzNy0AM9oAVOAwZifg=s1600)
+![image description](https://www.cansat.fi/assets/images/pinout-1379d0eb76f4481c4d6abc462228d831.png)
 
 # License
 
