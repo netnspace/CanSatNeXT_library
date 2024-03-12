@@ -74,7 +74,7 @@ void createMacAddress(uint8_t lastByte, uint8_t mac[6])
     mac[5] = lastByte;
 }
 
-uint8_t sendData(String data)
+uint8_t sendDataString(String data)
 {   
     if(radioHasBeenInitialized)
     {

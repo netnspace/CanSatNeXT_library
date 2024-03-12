@@ -8,13 +8,28 @@
 
 uint8_t initSDCard();
 bool SDCardPresent();
-uint8_t appendFile(String filename, String data);
+
+uint8_t appendFileOnDisk(String path, String data);
+
+template <typename T>
+uint8_t appendFile(String path, T data) {
+    String dataStr = String(data);
+    return appendFileOnDisk(path, dataStr);
+}
+
+uint8_t writeFileOnDisk(String path, String data);
+
+template <typename T>
+uint8_t writeFile(String path, T data) {
+    String dataStr = String(data);
+    return writeFileOnDisk(path, dataStr);
+}
+
 void printFileSystem();
 void newDir(String path);
 void deleteDir(String path);
 bool fileExists(String path);
 uint32_t fileSize(String path);
-uint8_t writeFile(String path, String data);
 String readFile(String path);
 void renameFile(String oldpath, String newpath);
 void deleteFile(String path);

@@ -26,7 +26,7 @@ uint8_t initSDCard()
     return 0;
 }
 
-uint8_t appendFile(String path, String data)
+uint8_t appendFileOnDisk(String path, String data)
 {
     File file = SD.open(path, FILE_APPEND);
     if(!file){
@@ -94,7 +94,7 @@ uint32_t fileSize(String path)
     return length;
 }
 
-uint8_t writeFile(String path, String data)
+uint8_t writeFileOnDisk(String path, String data)
 {
     File file = SD.open(path, FILE_WRITE);
     if(!file){

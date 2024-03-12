@@ -13,7 +13,15 @@ __attribute__((weak)) void onDataReceived(String data);
 __attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, int len);
 __attribute__((weak)) void onDataSent(const bool success);
 
-uint8_t sendData(String data);
+
+uint8_t sendDataString(String data);
+
+template <typename T>
+uint8_t sendData(T data) {
+    String dataStr = String(data);
+    return sendDataString(dataStr);
+}
+
 uint8_t sendData(char *data, uint16_t len);
 
 #endif
