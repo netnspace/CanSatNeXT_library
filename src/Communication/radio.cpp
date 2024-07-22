@@ -6,11 +6,22 @@
 #include "esp_wifi.h"
 #include <WiFi.h>
 
+#define ESP_MAJOR_VERSION 3
+
+#if defined(ESP_ARDUINO_VERSION)
+  #define ESP_MAJOR_VERSION ESP_ARDUINO_VERSION >> 16
+#endif
+
+
 esp_now_peer_info_t peerInfo;
 
 uint8_t broadcastAddress[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+#if ESP_MAJOR_VERSION == 3
+void internalDataReceivedCallback(const esp_now_recv_info *info, const uint8_t *data, int data_len);
+#else
 void internalDataReceivedCallback(const uint8_t * mac, const uint8_t *incomingData, int len);
+#endif
 void internalDataSentCallback(const uint8_t *mac_addr, esp_now_send_status_t status);
 
 bool radioHasBeenInitialized = false;
@@ -105,7 +116,17 @@ void internalDataSentCallback(const uint8_t *mac_addr, esp_now_send_status_t sta
     onDataSent(success);
 }
 
-// This function is called every time data has been received
+#if ESP_MAJOR_VERSION == 3
+void internalDataReceivedCallback(const esp_now_recv_info *info, const uint8_t *data, int data_len) {
+    const uint8_t *mac = info->src_addr;
+    String receivedData = "";
+    for (int i = 0; i < data_len; i++) {
+        receivedData += (char) data[i];
+    }
+    onDataReceived(receivedData);
+    onBinaryDataReceived(data, data_len);
+}
+#else
 void internalDataReceivedCallback(const uint8_t * mac, const uint8_t *incomingData, int len)
 {
     String receivedData = "";
@@ -115,6 +136,9 @@ void internalDataReceivedCallback(const uint8_t * mac, const uint8_t *incomingDa
     onDataReceived(receivedData);
     onBinaryDataReceived(incomingData, len);
 }
+#endif
+// This function is called every time data has been received
+
 
 __attribute__((weak)) void onDataReceived(String data) {
     
