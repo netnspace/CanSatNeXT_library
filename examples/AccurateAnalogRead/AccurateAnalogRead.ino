@@ -1,5 +1,5 @@
 /*
-  The analog-to-digital converter in ESP32 and Arduino are not very linear. This code uses a polynomial correction function, that correlates
+  The analog-to-digital converters in ESP32 and Arduino are not very linear. This code uses a polynomial correction function, that correlates
   the input value to the real voltage, improving the linearity and making the conversion easier. Inside the dynamic range of 0.13-3.13 V,
   the RMS error is only 0.01 volts when using this function.
 */

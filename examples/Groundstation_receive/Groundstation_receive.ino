@@ -25,6 +25,7 @@ void setup() {
 void loop() {
   // We have nothing to do in the loop.
   delay(1000);
+  // To demonstrate how the groundstation can send data, let's send a message once a second. Remove this line in your own application.
   sendData("THIS IS GS!!");
 }
 

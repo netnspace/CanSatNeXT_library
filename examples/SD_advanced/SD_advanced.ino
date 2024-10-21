@@ -58,6 +58,7 @@ void setup() {
   if(!fileExists("/testDir/")) Serial.println("testDir doesn't exist");
 
   // We can also read the mechanical switch from the SD-card connector, indicating if a card is present or not
+  // Note that the polarity may vary, so on some boards the result may be flipped.
   bool cardPresent = SDCardPresent();
   if(cardPresent)
   {

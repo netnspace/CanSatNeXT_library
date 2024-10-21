@@ -1,5 +1,5 @@
 /*
-  This example prints the linear acceleration readings in the correct format for Arduino IDE plotter 
+  This example prints the linear acceleration readings in the correct format for the Arduino IDE plotter 
 */
 //Include CanSatNeXT library
 #include <CanSatNeXT.h>

@@ -13,15 +13,22 @@ __attribute__((weak)) void onDataReceived(String data);
 __attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, int len);
 __attribute__((weak)) void onDataSent(const bool success);
 
+int8_t getRSSI();
 
-uint8_t sendDataString(String data);
+uint8_t sendDataString(String data);         // Sends ASCII data
+uint8_t sendData(uint8_t* data, uint16_t len); // Sends binary data
 
+// 1. Basic and easy: ASCII use case (without length)
 template <typename T>
 uint8_t sendData(T data) {
-    String dataStr = String(data);
-    return sendDataString(dataStr);
+    String dataStr = String(data);           // Convert to String
+    return sendDataString(dataStr);          // Send as ASCII
 }
 
-uint8_t sendData(char *data, uint16_t len);
+// 2. Binary use case (with length specified)
+template <typename T>
+uint8_t sendData(T* data, uint16_t len) {
+    return sendData(reinterpret_cast<uint8_t*>(data), len); // Send as binary
+}
 
 #endif

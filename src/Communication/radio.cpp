@@ -23,9 +23,25 @@ void internalDataReceivedCallback(const esp_now_recv_info *info, const uint8_t *
 void internalDataReceivedCallback(const uint8_t * mac, const uint8_t *incomingData, int len);
 #endif
 void internalDataSentCallback(const uint8_t *mac_addr, esp_now_send_status_t status);
+void promiscuous_rx_cb(void *buf, wifi_promiscuous_pkt_type_t type);
 
 bool radioHasBeenInitialized = false;
 
+
+typedef struct {
+  unsigned frame_ctrl: 16;
+  unsigned duration_id: 16;
+  uint8_t addr1[6]; /* receiver address */
+  uint8_t addr2[6]; /* sender address */
+  uint8_t addr3[6]; /* filtering address */
+  unsigned sequence_ctrl: 16;
+  uint8_t addr4[6]; /* optional */
+} wifi_ieee80211_mac_hdr_t;
+
+typedef struct {
+  wifi_ieee80211_mac_hdr_t hdr;
+  uint8_t payload[0]; /* network data ended with 4 bytes csum (CRC32) */
+} wifi_ieee80211_packet_t;
 
 void printAddress(uint8_t mac[6])
 {
@@ -58,6 +74,8 @@ uint8_t initializeESPNOW(uint8_t *macAddress)
     esp_wifi_set_protocol( WIFI_IF_STA , WIFI_PROTOCOL_LR);   
     esp_now_register_send_cb(internalDataSentCallback);
     esp_now_register_recv_cb(internalDataReceivedCallback);
+    esp_wifi_set_promiscuous(true);
+    esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
 
     // Register peer
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
@@ -97,7 +115,7 @@ uint8_t sendDataString(String data)
     }
 }
 
-uint8_t sendData(char *data, uint16_t len)
+uint8_t sendData(uint8_t *data, uint16_t len)
 {   
     if(radioHasBeenInitialized)
     {
@@ -137,14 +155,32 @@ void internalDataReceivedCallback(const uint8_t * mac, const uint8_t *incomingDa
     onBinaryDataReceived(incomingData, len);
 }
 #endif
-// This function is called every time data has been received
 
 
-__attribute__((weak)) void onDataReceived(String data) {
-    
+int8_t lastRSSI = 1;
+int8_t getRSSI(){
+    return lastRSSI;
 }
 
-__attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, int len){
+void promiscuous_rx_cb(void *buf, wifi_promiscuous_pkt_type_t type) {
+  if (type != WIFI_PKT_MGMT)
+    return;
+
+  const wifi_promiscuous_pkt_t *ppkt = (wifi_promiscuous_pkt_t *)buf;
+  const wifi_ieee80211_packet_t *ipkt = (wifi_ieee80211_packet_t *)ppkt->payload;
+  const wifi_ieee80211_mac_hdr_t *hdr = &ipkt->hdr;
+  // record RSSI only if the MAC address matches
+  if (memcmp(broadcastAddress, hdr->addr2, 6) == 0) {
+    int8_t rssi = ppkt->rx_ctrl.rssi;
+    lastRSSI = rssi;
+  }
+}
+
+// This function is called every time data has been received
+__attribute__((weak)) void onDataReceived(String data) {
+}
+
+__attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, uint16_t len){
 
 }
 
