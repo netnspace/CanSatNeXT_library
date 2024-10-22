@@ -181,7 +181,6 @@ __attribute__((weak)) void onDataReceived(String data) {
 }
 
 __attribute__((weak)) void onBinaryDataReceived(const uint8_t *data, uint16_t len){
-
 }
 
 __attribute__((weak)) void onDataSent(const bool success){
