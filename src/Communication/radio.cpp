@@ -12,7 +12,7 @@
   #define ESP_MAJOR_VERSION ESP_ARDUINO_VERSION >> 16
 #endif
 
-
+uint8_t radio_channel = 1; // Default channel set to 1 (2.412 GHz)
 esp_now_peer_info_t peerInfo;
 
 uint8_t broadcastAddress[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -43,6 +43,44 @@ typedef struct {
   uint8_t payload[0]; /* network data ended with 4 bytes csum (CRC32) */
 } wifi_ieee80211_packet_t;
 
+void setRadioChannel(uint8_t newChannel)
+{
+    // Ensure channel is within the allowed range (1-11) 2.407 GHz + channel * 0.05 Ghz, up to 11.
+
+    if(newChannel > 11) newChannel = 11;
+    radio_channel = newChannel;
+}
+
+uint8_t getRadioChannel()
+{
+    uint8_t primary_channel;
+    wifi_second_chan_t secondary_channel;
+    esp_err_t get_channel_result = esp_wifi_get_channel(&primary_channel, &secondary_channel);
+
+    if (get_channel_result == ESP_OK) {
+        return primary_channel;
+    } else {
+        return 0;
+    }
+}
+
+void printRadioFrequency()
+{
+    uint8_t channel = getRadioChannel();
+    if(channel == 0)
+    {
+        Serial.println("Error when fetching frequency");
+    }else{
+        float frequency = 2.407 + channel * 0.005;
+        char report[128];
+        memset(report, 0, sizeof(report));
+        snprintf(report, sizeof(report), "Radio frequency: %.3f GHz", frequency);
+        Serial.println(report);
+    }
+}
+
+
+
 void printAddress(uint8_t mac[6])
 {
   for (int n = 0; n < 6; n++)
@@ -57,7 +95,7 @@ void printAddress(uint8_t mac[6])
 uint8_t initializeESPNOW(uint8_t *macAddress)
 {
     memcpy(broadcastAddress, macAddress, 6);
-
+    
     WiFi.mode(WIFI_STA);
     // set receive address
     if(esp_wifi_set_mac(WIFI_IF_STA, broadcastAddress))
@@ -85,6 +123,12 @@ uint8_t initializeESPNOW(uint8_t *macAddress)
     if (esp_now_add_peer(&peerInfo) != ESP_OK){
         Serial.println("Failed to add peer");
         return 1;
+    }
+
+    uint8_t new_channel = radio_channel;
+    esp_err_t set_channel_result = esp_wifi_set_channel(new_channel, WIFI_SECOND_CHAN_NONE);
+    if (set_channel_result != ESP_OK) {
+        Serial.println("Failed to set Wi-Fi channel.");
     }
 
 

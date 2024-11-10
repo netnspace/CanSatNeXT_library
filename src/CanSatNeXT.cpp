@@ -36,12 +36,7 @@ uint8_t CanSatInit(uint8_t *macAddress) {
     Serial.println("Failed to initialize the barometer");
     errors = ERROR_BARO;
   }
-  bool sd_present = SDCardPresent();
-  if(!sd_present)
-  {
-    Serial.println("No SD-card present! Can't initialize the memory");
-    errors = ERROR_NO_SD_CARD;
-  }else if(initSDCard()){
+  if(initSDCard()){
     Serial.println("Failed to initialize the SD-card");
     errors = ERROR_MEMORY;
   }
